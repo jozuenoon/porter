@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -43,7 +42,8 @@ func (h *HTTPController) PortsFromStream(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	if err := h.svc.PortsFromStream(context.Background(), r.Body); err != nil {
+	ctx := r.Context()
+	if err := h.svc.PortsFromStream(ctx, r.Body); err != nil {
 		http.Error(w, shouldEncode(ErrorResponse{Error: err.Error()}), http.StatusInternalServerError)
 
 		return
@@ -67,7 +67,8 @@ func (h *HTTPController) GetPort(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	port, err := h.svc.GetPort(context.Background(), unloc)
+	ctx := r.Context()
+	port, err := h.svc.GetPort(ctx, unloc)
 	if err != nil {
 		http.Error(w, shouldEncode(ErrorResponse{Error: err.Error()}), http.StatusInternalServerError)
 
