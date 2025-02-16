@@ -22,14 +22,14 @@ func main() {
 	batchSize := 1000 // to be configured via environment variable.
 
 	portsFromStreamUsecase := portsfromstream.NewService(repo, ingestor, batchSize)
-	getPortUseCase := getport.NewService(repo)
+	getPortUsecase := getport.NewService(repo)
 
 	svc := &struct {
 		*portsfromstream.PortsFromStreamService
 		*getport.GetPortService
 	}{
 		portsFromStreamUsecase,
-		getPortUseCase,
+		getPortUsecase,
 	}
 
 	httpController := controller.NewHTTPController(svc)

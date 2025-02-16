@@ -43,6 +43,7 @@ func (h *HTTPController) PortsFromStream(w http.ResponseWriter, r *http.Request)
 	}
 
 	ctx := r.Context()
+
 	if err := h.svc.PortsFromStream(ctx, r.Body); err != nil {
 		http.Error(w, shouldEncode(ErrorResponse{Error: err.Error()}), http.StatusInternalServerError)
 
@@ -68,6 +69,7 @@ func (h *HTTPController) GetPort(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ctx := r.Context()
+
 	port, err := h.svc.GetPort(ctx, unloc)
 	if err != nil {
 		http.Error(w, shouldEncode(ErrorResponse{Error: err.Error()}), http.StatusInternalServerError)
